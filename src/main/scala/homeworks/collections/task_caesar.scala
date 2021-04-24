@@ -1,8 +1,8 @@
 package homeworks.collections
 
-import homeworks.HomeworksUtils.TaskSyntax
-
 object task_caesar {
+
+  private val ALPHABET: IndexedSeq[Char] = 'A' to 'Z'
 
   /**
    * В данном задании Вам предлагается реализовать функции,
@@ -17,15 +17,23 @@ object task_caesar {
    * @param offset сдвиг вперёд по алфавиту
    * @return зашифрованное слово
    */
-  def encrypt(word: String, offset: Int): String =
-    task"Реализуйте метод `encrypt`"()
+  def encrypt(word: String, offset: Int): String = word.map(encryptChar(offset))
 
   /**
    * @param cipher шифр, который необходимо расшифровать
    * @param offset сдвиг вперёд по алфавиту
    * @return расшифрованное слово
    */
-  def decrypt(cipher: String, offset: Int): String =
-    task"Реализуйте метод `decrypt`"()
+  def decrypt(cipher: String, offset: Int): String = encrypt(cipher, -offset)
 
+  private def encryptChar(offset: Int)(char: Char): Char = {
+    val index = calculateIndex(char, offset)
+    if (index >= 0) {
+      ALPHABET(index)
+    } else {
+      ALPHABET(index + ALPHABET.size)
+    }
+  }
+
+  private def calculateIndex(char: Char, offset: Int) = (ALPHABET.indexOf(char) + offset) % ALPHABET.size
 }
