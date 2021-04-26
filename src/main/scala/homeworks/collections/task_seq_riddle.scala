@@ -52,10 +52,7 @@ object task_seq_riddle extends App {
    *
    */
 
-  val funSeq: LazyList[List[Int]] = LazyList.empty
+  val funSeq: LazyList[List[Int]] = List(1) #:: funSeq.map{n => nextLine(n)}
 
-  println(nextLine(List(1))) // 1 1
-  println(nextLine(List(1, 1)))  // 2 1
-  println(nextLine(List(2, 1))) // 1 2 1 1
-  println(nextLine(List(1, 2, 1, 1))) // 1 1 1 2 2 1
+  println(funSeq(5))
 }
