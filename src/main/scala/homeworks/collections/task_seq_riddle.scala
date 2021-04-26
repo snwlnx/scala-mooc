@@ -34,7 +34,7 @@ object task_seq_riddle extends App {
         case Nil => acc ++ (charCounter :: prev :: Nil)
         case cur :: _ => {
           val counter = if (cur == prev) charCounter + 1 else 1
-          val newAcc: List[Int] = if (counter == 1 && cur != prev) acc ++ (charCounter :: prev :: Nil)  else acc
+          val newAcc = if (counter == 1) acc ++ (charCounter :: prev :: Nil) else acc
 
           nextLineRec(list.tail, newAcc, counter, cur)
         }
@@ -53,6 +53,4 @@ object task_seq_riddle extends App {
    */
 
   val funSeq: LazyList[List[Int]] = List(1) #:: funSeq.map{n => nextLine(n)}
-
-  println(funSeq(5))
 }
