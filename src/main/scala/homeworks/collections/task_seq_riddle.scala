@@ -2,6 +2,8 @@ package homeworks.collections
 
 import homeworks.HomeworksUtils.TaskSyntax
 
+import scala.annotation.tailrec
+
 object task_seq_riddle extends App {
 
   /**
@@ -29,6 +31,7 @@ object task_seq_riddle extends App {
    * */
 
   def nextLine(currentLine: List[Int]): List[Int] = {
+    @tailrec
     def nextLineRec(list: List[Int], acc: List[Int], charCounter: Int, prev: Int): List[Int] = {
       list match {
         case Nil => acc ++ (charCounter :: prev :: Nil)
