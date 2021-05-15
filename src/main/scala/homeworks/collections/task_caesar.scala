@@ -1,6 +1,6 @@
 package homeworks.collections
 
-object task_caesar extends App {
+object task_caesar {
   final val alphabetSize = 26
   final val maxAlphabetIndex = 90
   final val startAlphabetIndex = 65

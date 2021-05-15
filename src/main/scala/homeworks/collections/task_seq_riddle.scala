@@ -4,7 +4,7 @@ import homeworks.HomeworksUtils.TaskSyntax
 
 import scala.annotation.tailrec
 
-object task_seq_riddle extends App {
+object task_seq_riddle {
 
   /**
    * 1 - единица
