@@ -2,7 +2,11 @@ package homeworks.collections
 
 import homeworks.HomeworksUtils.TaskSyntax
 
+import scala.collection.immutable.NumericRange
+
 object task_caesar {
+
+  val alphabet: NumericRange.Inclusive[Char] = 'A' to 'Z'
 
   /**
    * В данном задании Вам предлагается реализовать функции,
@@ -18,7 +22,10 @@ object task_caesar {
    * @return зашифрованное слово
    */
   def encrypt(word: String, offset: Int): String =
-    task"Реализуйте метод `encrypt`"()
+    word.map(c => {
+      val alphabetIndex = alphabet.indexOf(c);
+      alphabet((alphabetIndex + offset) % alphabet.size)
+    })
 
   /**
    * @param cipher шифр, который необходимо расшифровать
@@ -26,6 +33,9 @@ object task_caesar {
    * @return расшифрованное слово
    */
   def decrypt(cipher: String, offset: Int): String =
-    task"Реализуйте метод `decrypt`"()
+    cipher.map(c => {
+      val cipherIndex = alphabet.indexOf(c)
+      alphabet((alphabet.size + (cipherIndex - offset % alphabet.size)) % alphabet.size)
+    })
 
 }
