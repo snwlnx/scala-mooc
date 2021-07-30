@@ -21,5 +21,13 @@ object task_futures_sequence {
    */
   def fullSequence[A](futures: List[Future[A]])
                      (implicit ex: ExecutionContext): Future[(List[A], List[Throwable])] =
-    task"Реализуйте метод `fullSequence`"()
+    futures
+      .map(toEither)
+      .foldLeft(Future(List.empty[Either[Throwable, A]]))(
+        (acc, future) => acc.zipWith(future)((list, result) => result :: list)
+      )
+      .map(_.reverse)
+      .map(_.partitionMap(_.swap))
+
+  def toEither[A](future: Future[A]) (implicit ex: ExecutionContext) = future.map(Right(_)).recover(Left(_))
 }

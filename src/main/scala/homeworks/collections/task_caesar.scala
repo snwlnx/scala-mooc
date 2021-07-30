@@ -4,6 +4,7 @@ import homeworks.HomeworksUtils.TaskSyntax
 
 object task_caesar {
 
+  private val alp: IndexedSeq[Char] = 'A' to 'Z'
   /**
    * В данном задании Вам предлагается реализовать функции,
    * реализующие кодирование/декодирование строки шифром Цезаря.
@@ -18,7 +19,9 @@ object task_caesar {
    * @return зашифрованное слово
    */
   def encrypt(word: String, offset: Int): String =
-    task"Реализуйте метод `encrypt`"()
+    word.map(ch => alp(getIndex(ch, offset)))
+
+
 
   /**
    * @param cipher шифр, который необходимо расшифровать
@@ -26,6 +29,14 @@ object task_caesar {
    * @return расшифрованное слово
    */
   def decrypt(cipher: String, offset: Int): String =
-    task"Реализуйте метод `decrypt`"()
+    encrypt(cipher, -offset)
+
+  def getIndex(char: Char, offSet: Int) : Int = {
+    val index = (alp.indexOf(char) + offSet) % alp.size
+    if (index < 0)
+      alp.size + index
+    else
+      index
+  }
 
 }
