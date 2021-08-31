@@ -1,8 +1,8 @@
 package homeworks.futures
 
-import homeworks.HomeworksUtils.TaskSyntax
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 
 object task_futures_sequence {
 
@@ -20,6 +20,16 @@ object task_futures_sequence {
    * @return асинхронную задачу с кортежом из двух списков
    */
   def fullSequence[A](futures: List[Future[A]])
-                     (implicit ex: ExecutionContext): Future[(List[A], List[Throwable])] =
-    task"Реализуйте метод `fullSequence`"()
+                     (implicit ex: ExecutionContext): Future[(List[A], List[Throwable])] = {
+    val wrapped = Future.sequence(
+      futures
+        .map(f => f.map(Right(_)))
+        .map(_.recoverWith{
+          case NonFatal(e) => Future.successful(Left(e))
+        })
+    )
+    val succ = wrapped.map(l => l.collect{ case Right(v) => v})
+    val err = wrapped.map(l => l.collect{ case Left(e) => e})
+    succ.zip(err)
+  }
 }
